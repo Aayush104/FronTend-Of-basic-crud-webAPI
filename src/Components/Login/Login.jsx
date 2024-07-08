@@ -8,6 +8,10 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const navigateTo = useNavigate();
 
+    
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -17,8 +21,13 @@ const Login = () => {
                 password
             });
 
-            if (response.status === 200) {
-                const tokenValue = response.data.token;
+
+            const tokenValue = response.data.token;
+            const validity = JSON.parse(atob(tokenValue.split('.')[1])).validity
+
+            console.log(validity)
+            if (response.status === 200 && validity == "True") {
+               
                 Cookies.set('Token', tokenValue, { expires: 7 });
 
                 const loggedInID = JSON.parse(atob(tokenValue.split('.')[1])).Role;

@@ -22,9 +22,9 @@ const handleSubmit = async (e)=>{
 
     const response = await axios.post("https://localhost:7129/api/Users/register",{
 
-      username,
-      email,
-      password : password1,
+      userName: username,
+      Email: email,
+      Password : password1,
       
 
     })
@@ -34,7 +34,8 @@ const handleSubmit = async (e)=>{
 
   if(response.status === 200){
 
-NavigateTo ('/')
+NavigateTo (`/otp/${email}`)
+
 
   }
 }

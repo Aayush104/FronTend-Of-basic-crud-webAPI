@@ -9,6 +9,7 @@ import Description from './Components/Descriptions/Description';
 import Personal from './Components/Personal/Personal';
 import Update from './Components/Update/Update';
 import Admin from './Components/AdminHome/Admin';
+import Otp from './Components/Otp/Otp';
  // Make sure to create this component
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/Description/:id" element={<Protect requiredRole={['']}><Description /></Protect>} />
           <Route path="/Personal" element={<Protect requiredRole={['']}><Personal/></Protect>} />
           <Route path="/edit/:id" element={<Protect requiredRole={['']}><Update/></Protect>} />
+          <Route path="/otp/:email" element={<Otp/>} />
           <Route path="/Admin" element={<Protect requiredRole={['Admin']}><Admin/></Protect>} />
          
         </Routes>
