@@ -10,6 +10,7 @@ import Personal from './Components/Personal/Personal';
 import Update from './Components/Update/Update';
 import Admin from './Components/AdminHome/Admin';
 import Otp from './Components/Otp/Otp';
+import Search from './Components/Search/Search';
  // Make sure to create this component
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/Description/:id" element={<Protect requiredRole={['']}><Description /></Protect>} />
           <Route path="/Personal" element={<Protect requiredRole={['']}><Personal/></Protect>} />
           <Route path="/edit/:id" element={<Protect requiredRole={['']}><Update/></Protect>} />
+          <Route path="/search/:id" element={<Protect requiredRole={['']}><Search/></Protect>} />
           <Route path="/otp/:email" element={<Otp/>} />
           <Route path="/Admin" element={<Protect requiredRole={['Admin']}><Admin/></Protect>} />
          
