@@ -97,7 +97,9 @@ NavigateTo (`/otp/${email}`)
             <NavLink to='/'>
               <span className='cursor-pointer font-medium text-sky-600 hover:text-cyan-500 capitalize'> SignIn</span>
             </NavLink>
+
           </div>
+          
         </form>
       </div>
     </div>

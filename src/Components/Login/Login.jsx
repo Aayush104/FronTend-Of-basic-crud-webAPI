@@ -2,15 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigateTo = useNavigate();
-
-    
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,12 +20,12 @@ const Login = () => {
             });
 
 
+            console.log(response)
             const tokenValue = response.data.token;
-            const validity = JSON.parse(atob(tokenValue.split('.')[1])).validity
+            const validity = JSON.parse(atob(tokenValue.split('.')[1])).validity;
 
-            console.log(validity)
-            if (response.status === 200 && validity == "True") {
-               
+            
+            if (response.status === 200 && validity === "True") {
                 Cookies.set('Token', tokenValue, { expires: 7 });
 
                 const loggedInID = JSON.parse(atob(tokenValue.split('.')[1])).Role;
@@ -42,6 +40,47 @@ const Login = () => {
             console.error('Error logging in', error);
         }
     }
+
+    const handleSuccess = async (credentialResponse)=>{
+
+        try{
+            console.log("This is credential response",credentialResponse)
+            const decoded = jwtDecode(credentialResponse?.credential)
+            console.log("here is data",decoded)
+
+            const response = await axios.post("https://localhost:7129/api/Users/signin-google",{
+                userName: decoded.email,
+                Email: decoded.email,
+                EmailConfirmed : decoded.email_verified
+                
+                
+                
+            })
+ 
+            console.log("This is response",response)
+
+            const tokenValue = response.data.token;
+
+            if(response.status == 200){
+                Cookies.set("Token",tokenValue)
+                
+                navigateTo('/home')
+                console.log("You are now looged in as", decoded.given_name)
+
+            }
+           
+        }catch(error){
+            console.error('Error during user registration:', error);
+        }
+
+    }
+
+    const handleError = () => {
+        console.log('Login Failed');
+      }
+   
+
+   
 
     return (
         <div className='flex items-center justify-center h-screen bg-gray-100'>
@@ -81,6 +120,11 @@ const Login = () => {
                             <span className='cursor-pointer font-medium text-sky-600 hover:text-cyan-500 capitalize'> Sign Up</span>
                         </NavLink>
                     </div>
+                    
+
+<GoogleLogin onSuccess={handleSuccess}
+    onError={handleError}
+/>
                 </form>
             </div>
         </div>

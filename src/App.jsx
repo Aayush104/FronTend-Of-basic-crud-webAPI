@@ -12,6 +12,7 @@ import Admin from './Components/AdminHome/Admin';
 import Otp from './Components/Otp/Otp';
 import Search from './Components/Search/Search';
  // Make sure to create this component
+ 
 
 const App = () => {
   return (

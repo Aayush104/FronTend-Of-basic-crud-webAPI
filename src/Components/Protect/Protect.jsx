@@ -11,6 +11,7 @@ const Protect = ({ children, requiredRole }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
+               
                 if (!token) {
                     navigateTo('/');
                     return;
@@ -25,6 +26,7 @@ const Protect = ({ children, requiredRole }) => {
                 if (response.status === 200) {
                     const decodedToken = JSON.parse(atob(token.split('.')[1]));
                     const userRole = decodedToken.Role;
+                    console.log("User ko role", userRole)
 
                     if (requiredRole.includes(userRole)) {
                         setAuthenticated(true);
