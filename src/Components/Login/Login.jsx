@@ -20,7 +20,7 @@ const Login = () => {
             });
 
 
-            console.log(response)
+            //console.log(response)
             const tokenValue = response.data.token;
             const validity = JSON.parse(atob(tokenValue.split('.')[1])).validity;
 

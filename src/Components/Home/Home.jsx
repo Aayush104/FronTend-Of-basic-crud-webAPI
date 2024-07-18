@@ -19,7 +19,7 @@ const Home = () => {
           }
         });
       
-        console.log(response.data)
+        console.log("yaha aauxa encrypt",response)
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -38,7 +38,7 @@ const Home = () => {
             <h2 className='text-center'>{item.title}</h2>
             <div className='flex'>
 
-            <NavLink to = {`/Description/${item.id}`} >
+            <NavLink to = {`/Description/${item.encId}`} >
             <button className='bg-sky-600 mx-auto text-white rounded-md p-1 mt-2'>View Description</button>
             </NavLink>
              

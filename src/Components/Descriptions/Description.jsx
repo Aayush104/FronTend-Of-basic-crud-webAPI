@@ -86,7 +86,7 @@ navigateTo('/Personal')
           <p>{data.description}</p>
           {loggedInID === data.loginId && (
             <div className='flex gap-4 mt-4'>
-              <NavLink to={`/edit/${data.id}`}>
+              <NavLink to={`/edit/${data.encId}`}>
                 <button className='bg-sky-600 px-4 py-2 text-white rounded-md'>
                   Edit
                 </button>

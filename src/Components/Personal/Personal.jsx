@@ -44,7 +44,7 @@ useEffect(()=>{
   <p> {item.title}</p>
   <p> {item.description}</p>
 
-  <NavLink to = {`/Description/${item.id}`} >
+  <NavLink to = {`/Description/${item.encId}`} >
             <button className='bg-sky-600 mx-auto text-white rounded-md p-1 mt-2'>View Description</button>
             </NavLink>
 </div>
