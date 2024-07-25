@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
 import Home from './Components/Home/Home';
-import Protect from './Components/Protect/Protect';
+import {Protect,RedirectIfAuthenticated} from './Components/Protect/AuthComponent';
 import AddBlog from './Components/AddBlog/AddBlog';
 import Description from './Components/Descriptions/Description';
 import Personal from './Components/Personal/Personal';
@@ -19,8 +19,18 @@ const App = () => {
     <Router>
       <div>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={
+            
+            <RedirectIfAuthenticated>
+            <Login />
+            </RedirectIfAuthenticated>
+          } />
+          <Route path="/register" element={
+            
+            <RedirectIfAuthenticated>
+            <Register />
+            </RedirectIfAuthenticated>
+          } />
           <Route path="/home" element={<Protect requiredRole={['']}><Home /></Protect>} />
           <Route path="/Addblog" element={<Protect requiredRole={['']}><AddBlog /></Protect>} />
           <Route path="/Description/:id" element={<Protect requiredRole={['']}><Description /></Protect>} />

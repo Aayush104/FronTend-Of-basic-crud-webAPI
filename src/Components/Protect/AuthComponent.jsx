@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
+
+    
 
 const Protect = ({ children, requiredRole }) => {
     const navigateTo = useNavigate();
     const [authenticated, setAuthenticated] = useState(false);
     const token = Cookies.get("Token");
+    
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -28,7 +31,7 @@ const Protect = ({ children, requiredRole }) => {
                     const userRole = decodedToken.Role;
                     console.log("User ko role", userRole)
 
-                    if (requiredRole.includes(userRole)) {
+                    if (requiredRole.includes(userRole) ) {
                         setAuthenticated(true);
                     } else {
                         navigateTo('/'); //login in ma fyaldiney or unauthoruzed vaney euta page banayera tyo page ma fyaldniey
@@ -45,7 +48,34 @@ const Protect = ({ children, requiredRole }) => {
         checkAuth();
     }, [navigateTo, token, requiredRole]);
 
-    return authenticated ? <>{children}</> : null;
+    return authenticated ? <>{children}</> :  null;
 };
 
-export default Protect;
+
+
+
+
+const RedirectIfAuthenticated = ({children})=>{
+
+    const navigateTo = useNavigate();
+    const token = Cookies.get("Token")
+
+    useEffect(()=>{
+        if(token){
+            navigateTo('/home')
+
+        //Logout gar exist garna ko lagi vanera msg dekhauna toastify use garda vayo
+        }
+
+
+    },[navigateTo, token]);
+
+    return !token ? <>{children}</>: null;
+
+
+
+
+
+};
+
+export {Protect,RedirectIfAuthenticated};
