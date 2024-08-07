@@ -1,16 +1,29 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 
 const AddBlog = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
-
+  const [imagePreview, setImagePreview] = useState(null);
 
   const token = Cookies.get('Token');
+
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+    setImage(file);
+
+  
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -24,7 +37,7 @@ const AddBlog = () => {
     try {
       const response = await axios.post("https://localhost:7129/api/Blog/AddBlog", formData, {
         headers: {
-          Authorization : `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });
@@ -54,7 +67,7 @@ const AddBlog = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="content">
-             Description
+              Description
             </label>
             <textarea
               id="content"
@@ -75,6 +88,15 @@ const AddBlog = () => {
               onChange={handleImageChange}
               required
             />
+            {imagePreview && (
+              <div className="mt-4">
+                <img
+                  src={imagePreview}
+                  alt="Image preview"
+                  className="w-40 h-auto object-cover border border-gray-300 rounded-lg "
+                />
+              </div>
+            )}
           </div>
           <button
             type="submit"
